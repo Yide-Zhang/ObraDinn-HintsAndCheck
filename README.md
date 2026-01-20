@@ -2,6 +2,8 @@
 
 这是一个帮助玩家游玩《奥伯拉丁的回归》的工具。它支持玩家获取提示并查证自己的答案。支持Windows和MacOS。
 
+本程序的所有翻译使用[翻译精修补丁](https://github.com/Yide-Zhang/obradinn_chinese_pack) v0.2.2的版本。
+
 ## 下载
 
 在**右侧的Release侧栏**中下载**匹配你的操作系统**的压缩包，解压缩即得程序本体。
