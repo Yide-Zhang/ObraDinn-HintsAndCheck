@@ -1,0 +1,198 @@
+[
+    {
+        "id": 1,
+        "label": "不详",
+        "has_weapon": false,
+        "requires_offender": false
+    },
+    {
+        "id": 2,
+        "label": "幸存",
+        "has_weapon": true,
+        "weapons": [
+            "东印度群岛",
+            "中东",
+            "亚速尔群岛",
+            "佛得角",
+            "加那利群岛",
+            "大西洋岛屿",
+            "欧洲",
+            "英国",
+            "西印度群岛",
+            "非洲"
+        ],
+        "requires_offender": false
+    },
+    {
+        "id": 3,
+        "label": "病死",
+        "has_weapon": false,
+        "requires_offender": false
+    },
+    {
+        "id": 4,
+        "label": "老死",
+        "has_weapon": false,
+        "requires_offender": false
+    },
+    {
+        "id": 5,
+        "label": "自杀",
+        "has_weapon": true,
+        "weapons": [
+            "小刀",
+            "绳索",
+            "枪",
+            "矛"
+        ],
+        "requires_offender": false
+    },
+    {
+        "id": 6,
+        "label": "被冻死",
+        "has_weapon": false,
+        "requires_offender": false
+    },
+    {
+        "id": 7,
+        "label": "被小刀杀死",
+        "has_weapon": false,
+        "requires_offender": true
+    },
+    {
+        "id": 8,
+        "label": "被利爪抓死",
+        "has_weapon": false,
+        "requires_offender": false
+    },
+    {
+        "id": 9,
+        "label": "被剑杀死",
+        "has_weapon": false,
+        "requires_offender": true
+    },
+    {
+        "id": 10,
+        "label": "被勒死",
+        "has_weapon": false,
+        "requires_offender": true
+    },
+    {
+        "id": 11,
+        "label": "被吃掉",
+        "has_weapon": false,
+        "requires_offender": true
+    },
+    {
+        "id": 12,
+        "label": "被射死",
+        "has_weapon": true,
+        "weapons": [
+            "枪",
+            "炮",
+            "箭"
+        ],
+        "requires_offender": true
+    },
+    {
+        "id": 13,
+        "label": "被尖刺刺死",
+        "has_weapon": false,
+        "requires_offender": false
+    },
+    {
+        "id": 14,
+        "label": "被撕裂致死",
+        "has_weapon": false,
+        "requires_offender": true
+    },
+    {
+        "id": 15,
+        "label": "被斧子砍死",
+        "has_weapon": false,
+        "requires_offender": true
+    },
+    {
+        "id": 16,
+        "label": "被斩首",
+        "has_weapon": false,
+        "requires_offender": true
+    },
+    {
+        "id": 17,
+        "label": "被棍棒打死",
+        "has_weapon": false,
+        "requires_offender": true
+    },
+    {
+        "id": 18,
+        "label": "被毒死",
+        "has_weapon": false,
+        "requires_offender": false
+    },
+    {
+        "id": 19,
+        "label": "被溺死",
+        "has_weapon": false,
+        "requires_offender": true
+    },
+    {
+        "id": 20,
+        "label": "被炸死",
+        "has_weapon": false,
+        "requires_offender": false
+    },
+    {
+        "id": 21,
+        "label": "被烧死",
+        "has_weapon": false,
+        "requires_offender": false
+    },
+    {
+        "id": 22,
+        "label": "被电死",
+        "has_weapon": false,
+        "requires_offender": false
+    },
+    {
+        "id": 23,
+        "label": "被矛刺死",
+        "has_weapon": false,
+        "requires_offender": true
+    },
+    {
+        "id": 24,
+        "label": "被压死",
+        "has_weapon": true,
+        "weapons": [
+            "火炮",
+            "石头",
+            "货物",
+            "野兽",
+            "索具"
+        ],
+        "requires_offender": false
+    },
+    {
+        "id": 25,
+        "label": "摔死",
+        "has_weapon": true,
+        "weapons": [
+            "楼梯",
+            "索具",
+            "船上"
+        ],
+        "requires_offender": false
+    },
+    {
+        "id": 26,
+        "label": "重击",
+        "has_weapon": true,
+        "weapons": [
+            "尾巴",
+            "翅膀",
+            "蹄子"
+        ],
+        "requires_offender": false
+    }
+]
