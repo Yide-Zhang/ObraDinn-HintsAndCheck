@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>《奥伯拉丁的回归》身份与下落提示与查验程序</title>
+    <link rel="icon" href="icon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/style.css">
+    <script type="text/javascript" src="/eel.js"></script>
+    <script src="js/main.js" defer></script>
+</head>
+<body>
+    <div id="app">
+        <!-- List View -->
+        <div id="list-view" class="view active">
+            <div class="tools-bar">
+                <button id="btn-format" class="nav-btn">格式化</button>
+            </div>
+            <div id="grid-container"></div>
+            <div class="nav-bar">
+                <button id="btn-prev" class="nav-btn">&lt;&lt; 上一页</button>
+                <div id="page-info" class="page-info"></div>
+                <button id="btn-next" class="nav-btn">下一页 &gt;&gt;</button>
+            </div>
+        </div>
+
+        <!-- Detail View -->
+        <div id="detail-view" class="view">
+            <div class="top-bar">
+                <button id="btn-back" class="nav-btn">&lt;&lt; 返回列表</button>
+            </div>
+            
+            <div class="detail-top-container">
+                <div class="guess-widget-wrapper left">
+                    <button id="btn-check-identity" class="nav-btn check-btn">查验</button>
+                    <div id="identity-guess-container" class="guess-container">
+                        <span id="lbl-identity-guess" class="guess-label">不详</span>
+                    </div>
+                </div>
+
+                <img id="detail-image" src="" alt="Face">
+
+                <div class="guess-widget-wrapper right">
+                    <div id="fate-guess-container" class="guess-container">
+                        <span id="lbl-fate-part1" class="guess-label">未记录下落</span>
+                        <span id="lbl-fate-part2" class="guess-label"></span>
+                    </div>
+                    <button id="btn-check-fate" class="nav-btn check-btn">查验</button>
+                </div>
+            </div>
+
+            <div class="info-container">
+                <div class="info-column">
+                    <h2 class="column-title">身份</h2>
+                    <div id="identity-text" class="hint-text"></div>
+                    <button id="btn-reveal-identity" class="nav-btn reveal-btn">获取新提示</button>
+                    <div id="lbl-identity-done" class="done-label hidden">已显示所有提示</div>
+                </div>
+                
+                <div class="separator"></div>
+                
+                <div class="info-column">
+                    <h2 class="column-title">下落</h2>
+                    <div id="fate-text" class="hint-text"></div>
+                    <button id="btn-reveal-fate" class="nav-btn reveal-btn">获取新提示</button>
+                    <div id="lbl-fate-done" class="done-label hidden">已显示所有提示</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modals/Overlays -->
+        <!-- Crew Selector -->
+        <div id="crew-selector" class="overlay hidden">
+            <h2 id="crew-selector-title" class="overlay-title">选择船员</h2>
+            <div class="crew-layout">
+                <div id="crew-sidebar" class="sidebar hidden">
+                    <div class="sidebar-title">特殊</div>
+                    <div class="sidebar-item" data-id="-1">敌人</div>
+                    <div class="sidebar-item" data-id="-2">野兽</div>
+                </div>
+                <div class="crew-content">
+                    <div class="crew-header">
+                        <div class="col-id">编号</div>
+                        <div class="col-name">姓名</div>
+                        <div class="col-role">身份</div>
+                        <div class="col-origin">籍贯</div>
+                    </div>
+                    <div id="crew-list-container"></div>
+                </div>
+            </div>
+            <div class="overlay-nav">
+                <button id="btn-crew-prev" class="nav-btn">&lt;&lt;</button>
+                <div id="crew-page-info" class="page-info"></div>
+                <button id="btn-crew-next" class="nav-btn">&gt;&gt;</button>
+                <button id="btn-crew-cancel" class="nav-btn cancel-btn">取消</button>
+            </div>
+        </div>
+
+        <!-- Fate Selector -->
+        <div id="fate-selector" class="overlay hidden">
+            <h2 id="fate-selector-title" class="overlay-title">选择死因</h2>
+            <div id="fate-content-container" class="fate-content"></div>
+            <div class="overlay-nav" id="fate-nav">
+                <button id="btn-fate-prev" class="nav-btn">&lt;&lt;</button>
+                <div id="fate-page-info" class="page-info"></div>
+                <button id="btn-fate-next" class="nav-btn">&gt;&gt;</button>
+                <button id="btn-fate-cancel" class="nav-btn cancel-btn">取消</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
