@@ -2,361 +2,421 @@
     {
         "id": 1,
         "name": "罗伯特·威特瑞",
-        "role": "船长",
-        "origin": "英格兰"
+        "abbr": "罗伯特·威特瑞",
+        "role_id": 1,
+        "origin_id": 1
     },
     {
         "id": 2,
         "name": "威廉·霍斯卡特",
-        "role": "大副",
-        "origin": "苏格兰"
+        "abbr": "威廉·霍斯卡特",
+        "role_id": 2,
+        "origin_id": 2
     },
     {
         "id": 3,
         "name": "爱德华·尼柯斯",
-        "role": "二副",
-        "origin": "英格兰"
+        "abbr": "爱德华·尼柯斯",
+        "role_id": 3,
+        "origin_id": 1
     },
     {
         "id": 4,
         "name": "马丁·佩罗特",
-        "role": "三副",
-        "origin": "英格兰"
+        "abbr": "马丁·佩罗特",
+        "role_id": 4,
+        "origin_id": 1
     },
     {
         "id": 5,
         "name": "约翰·戴维斯",
-        "role": "四副",
-        "origin": "英格兰"
+        "abbr": "约翰·戴维斯",
+        "role_id": 5,
+        "origin_id": 1
     },
     {
         "id": 6,
         "name": "阿佛雷·克莱斯蒂",
-        "role": "水手长",
-        "origin": "奥地利"
+        "abbr": "阿佛雷·克莱斯蒂",
+        "role_id": 6,
+        "origin_id": 3
     },
     {
         "id": 7,
         "name": "查尔斯·迈纳",
-        "role": "副水手长",
-        "origin": "法国"
+        "abbr": "查尔斯·迈纳",
+        "role_id": 7,
+        "origin_id": 4
     },
     {
         "id": 8,
         "name": "亨利·埃文斯",
-        "role": "船医",
-        "origin": "英格兰"
+        "abbr": "亨利·埃文斯",
+        "role_id": 8,
+        "origin_id": 1
     },
     {
         "id": 9,
         "name": "詹姆斯·华莱士",
-        "role": "船医助手",
-        "origin": "英格兰"
+        "abbr": "詹姆斯·华莱士",
+        "role_id": 9,
+        "origin_id": 1
     },
     {
         "id": 10,
         "name": "温斯顿·史密斯",
-        "role": "木匠",
-        "origin": "美国"
+        "abbr": "温斯顿·史密斯",
+        "role_id": 10,
+        "origin_id": 5
     },
     {
         "id": 11,
         "name": "马库斯·吉布斯",
-        "role": "木匠助手",
-        "origin": "美国"
+        "abbr": "马库斯·吉布斯",
+        "role_id": 11,
+        "origin_id": 5
     },
     {
         "id": 12,
         "name": "托马斯·塞夫顿",
-        "role": "厨师",
-        "origin": "英格兰"
+        "abbr": "托马斯·塞夫顿",
+        "role_id": 12,
+        "origin_id": 1
     },
     {
         "id": 13,
         "name": "埃米尔·奥法雷",
-        "role": "屠夫",
-        "origin": "爱尔兰"
+        "abbr": "埃米尔·奥法雷",
+        "role_id": 13,
+        "origin_id": 6
     },
     {
         "id": 14,
         "name": "克里斯汀·沃尔夫",
-        "role": "枪炮长",
-        "origin": "奥地利"
+        "abbr": "克里斯汀·沃尔夫",
+        "role_id": 14,
+        "origin_id": 3
     },
     {
         "id": 15,
         "name": "奥卢斯·维尔特",
-        "role": "副枪炮长",
-        "origin": "波兰"
+        "abbr": "奥卢斯·维尔特",
+        "role_id": 15,
+        "origin_id": 7
     },
     {
         "id": 16,
         "name": "邓肯·麦凯",
-        "role": "事务长",
-        "origin": "苏格兰"
+        "abbr": "邓肯·麦凯",
+        "role_id": 16,
+        "origin_id": 2
     },
     {
         "id": 17,
         "name": "芬利·道尔顿",
-        "role": "舵手",
-        "origin": "英格兰"
+        "abbr": "芬利·道尔顿",
+        "role_id": 17,
+        "origin_id": 1
     },
     {
         "id": 18,
         "name": "爱德华·斯普拉特",
-        "role": "画家",
-        "origin": "英格兰"
+        "abbr": "爱德华·斯普拉特",
+        "role_id": 18,
+        "origin_id": 1
     },
     {
         "id": 19,
         "name": "阿比盖尔·霍斯卡特·威特瑞",
-        "role": "乘客",
-        "origin": "苏格兰"
+        "abbr": "阿比盖尔·霍斯卡特·威特瑞",
+        "role_id": 19,
+        "origin_id": 2
     },
     {
         "id": 20,
         "name": "努兹奥·帕斯夸",
-        "role": "乘客",
-        "origin": "意大利"
+        "abbr": "努兹奥·帕斯夸",
+        "role_id": 19,
+        "origin_id": 8
     },
     {
         "id": 21,
         "name": "艾米莉·杰克逊",
-        "role": "乘客",
-        "origin": "英格兰"
+        "abbr": "艾米莉·杰克逊",
+        "role_id": 19,
+        "origin_id": 1
     },
     {
         "id": 22,
         "name": "简·伯德小姐",
-        "role": "乘客",
-        "origin": "英格兰"
+        "abbr": "简·伯德小姐",
+        "role_id": 19,
+        "origin_id": 1
     },
     {
         "id": 23,
         "name": "林文兰",
-        "role": "乘客",
-        "origin": "福尔摩莎"
+        "abbr": "林文兰",
+        "role_id": 19,
+        "origin_id": 9
     },
     {
         "id": 24,
         "name": "谢一明",
-        "role": "乘客",
-        "origin": "福尔摩莎"
+        "abbr": "谢一明",
+        "role_id": 19,
+        "origin_id": 9
     },
     {
         "id": 25,
         "name": "陈石",
-        "role": "乘客",
-        "origin": "福尔摩莎"
+        "abbr": "陈石",
+        "role_id": 19,
+        "origin_id": 9
     },
     {
         "id": 26,
         "name": "刘福生",
-        "role": "乘客",
-        "origin": "福尔摩莎"
+        "abbr": "刘福生",
+        "role_id": 19,
+        "origin_id": 9
     },
     {
         "id": 27,
         "name": "尊吉·萨提",
-        "role": "船只服务员",
-        "origin": "印度"
+        "abbr": "尊吉·萨提",
+        "role_id": 20,
+        "origin_id": 10
     },
     {
         "id": 28,
         "name": "菲利普·达尔",
-        "role": "船长服务员",
-        "origin": "瑞典"
+        "abbr": "菲利普·达尔",
+        "role_id": 21,
+        "origin_id": 11
     },
     {
         "id": 29,
         "name": "保罗·莫斯",
-        "role": "大副服务员",
-        "origin": "威尔士"
+        "abbr": "保罗·莫斯",
+        "role_id": 22,
+        "origin_id": 12
     },
     {
         "id": 30,
         "name": "塞缪尔·加利根",
-        "role": "二副服务员",
-        "origin": "爱尔兰"
+        "abbr": "塞缪尔·加利根",
+        "role_id": 23,
+        "origin_id": 6
     },
     {
         "id": 31,
         "name": "罗德里克·安德森",
-        "role": "三副服务员",
-        "origin": "英格兰"
+        "abbr": "罗德里克·安德森",
+        "role_id": 24,
+        "origin_id": 1
     },
     {
         "id": 32,
         "name": "大卫·詹姆斯",
-        "role": "四副服务员",
-        "origin": "英格兰"
+        "abbr": "大卫·詹姆斯",
+        "role_id": 25,
+        "origin_id": 1
     },
     {
         "id": 33,
         "name": "彼得·米罗",
-        "role": "见习官员",
-        "origin": "英格兰"
+        "abbr": "彼得·米罗",
+        "role_id": 26,
+        "origin_id": 1
     },
     {
         "id": 34,
         "name": "托马斯·兰克",
-        "role": "见习官员",
-        "origin": "英格兰"
+        "abbr": "托马斯·兰克",
+        "role_id": 26,
+        "origin_id": 1
     },
     {
         "id": 35,
         "name": "查尔斯·赫什蒂",
-        "role": "见习官员",
-        "origin": "英格兰"
+        "abbr": "查尔斯·赫什蒂",
+        "role_id": 26,
+        "origin_id": 1
     },
     {
         "id": 36,
         "name": "奥米·古尔",
-        "role": "桅楼守望员",
-        "origin": "波斯"
+        "abbr": "奥米·古尔",
+        "role_id": 27,
+        "origin_id": 13
     },
     {
         "id": 37,
         "name": "蒂莫西·比门",
-        "role": "桅楼守望员",
-        "origin": "苏格兰"
+        "abbr": "蒂莫西·比门",
+        "role_id": 27,
+        "origin_id": 2
     },
     {
         "id": 38,
         "name": "李煌",
-        "role": "桅楼守望员",
-        "origin": "中国"
+        "abbr": "李煌",
+        "role_id": 27,
+        "origin_id": 14
     },
     {
         "id": 39,
         "name": "张捷",
-        "role": "桅楼守望员",
-        "origin": "中国"
+        "abbr": "张捷",
+        "role_id": 27,
+        "origin_id": 14
     },
     {
         "id": 40,
         "name": "洪力",
-        "role": "桅楼守望员",
-        "origin": "中国"
+        "abbr": "洪力",
+        "role_id": 27,
+        "origin_id": 14
     },
     {
         "id": 41,
         "name": "李伟",
-        "role": "桅楼守望员",
-        "origin": "中国"
+        "abbr": "李伟",
+        "role_id": 27,
+        "origin_id": 14
     },
     {
         "id": 42,
         "name": "尼克勒斯·博特里",
-        "role": "桅楼守望员",
-        "origin": "英格兰"
+        "abbr": "尼克勒斯·博特里",
+        "role_id": 27,
+        "origin_id": 1
     },
     {
         "id": 43,
         "name": "马巴",
-        "role": "桅楼守望员",
-        "origin": "新几内亚"
+        "abbr": "马巴",
+        "role_id": 27,
+        "origin_id": 15
     },
     {
         "id": 44,
         "name": "路易斯·沃克",
-        "role": "桅楼守望员",
-        "origin": "英格兰"
+        "abbr": "路易斯·沃克",
+        "role_id": 27,
+        "origin_id": 1
     },
     {
         "id": 45,
         "name": "洛尼·沃科",
-        "role": "桅楼守望员",
-        "origin": "俄罗斯"
+        "abbr": "洛尼·沃科",
+        "role_id": 27,
+        "origin_id": 16
     },
     {
         "id": 46,
         "name": "阿拉科·尼基新",
-        "role": "水手",
-        "origin": "俄罗斯"
+        "abbr": "阿拉科·尼基新",
+        "role_id": 28,
+        "origin_id": 16
     },
     {
         "id": 47,
         "name": "阿列谢·托波洛",
-        "role": "水手",
-        "origin": "俄罗斯"
+        "abbr": "阿列谢·托波洛",
+        "role_id": 28,
+        "origin_id": 16
     },
     {
         "id": 48,
         "name": "南森·彼得斯",
-        "role": "水手",
-        "origin": "英格兰"
+        "abbr": "南森·彼得斯",
+        "role_id": 28,
+        "origin_id": 1
     },
     {
         "id": 49,
         "name": "拉斯·林德",
-        "role": "水手",
-        "origin": "丹麦"
+        "abbr": "拉斯·林德",
+        "role_id": 28,
+        "origin_id": 17
     },
     {
         "id": 50,
         "name": "约翰·拿坡",
-        "role": "水手",
-        "origin": "威尔士"
+        "abbr": "约翰·拿坡",
+        "role_id": 28,
+        "origin_id": 12
     },
     {
         "id": 51,
         "name": "雷弗莱·拉杰波",
-        "role": "水手",
-        "origin": "印度"
+        "abbr": "雷弗莱·拉杰波",
+        "role_id": 28,
+        "origin_id": 10
     },
     {
         "id": 52,
         "name": "亚伯拉罕·阿克巴",
-        "role": "水手",
-        "origin": "印度"
+        "abbr": "亚伯拉罕·阿克巴",
+        "role_id": 28,
+        "origin_id": 10
     },
     {
         "id": 53,
         "name": "威廉·瓦西姆",
-        "role": "水手",
-        "origin": "印度"
+        "abbr": "威廉·瓦西姆",
+        "role_id": 28,
+        "origin_id": 10
     },
     {
         "id": 54,
         "name": "索罗门·赛义德",
-        "role": "水手",
-        "origin": "印度"
+        "abbr": "索罗门·赛义德",
+        "role_id": 28,
+        "origin_id": 10
     },
     {
         "id": 55,
         "name": "哈马窦·迪姆",
-        "role": "水手",
-        "origin": "塞拉利昂"
+        "abbr": "哈马窦·迪姆",
+        "role_id": 28,
+        "origin_id": 18
     },
     {
         "id": 56,
         "name": "亨利·布伦南",
-        "role": "水手",
-        "origin": "英格兰"
+        "abbr": "亨利·布伦南",
+        "role_id": 28,
+        "origin_id": 1
     },
     {
         "id": 57,
         "name": "亚历山大·布斯",
-        "role": "水手",
-        "origin": "英格兰"
+        "abbr": "亚历山大·布斯",
+        "role_id": 28,
+        "origin_id": 1
     },
     {
         "id": 58,
         "name": "帕特里克·奥黑根",
-        "role": "水手",
-        "origin": "爱尔兰"
+        "abbr": "帕特里克·奥黑根",
+        "role_id": 28,
+        "origin_id": 6
     },
     {
         "id": 59,
         "name": "乔治·谢利",
-        "role": "水手",
-        "origin": "英格兰"
+        "abbr": "乔治·谢利",
+        "role_id": 28,
+        "origin_id": 1
     },
     {
         "id": 60,
         "name": "塞缪尔·彼得斯",
-        "role": "水手",
-        "origin": "英格兰"
+        "abbr": "塞缪尔·彼得斯",
+        "role_id": 28,
+        "origin_id": 1
     }
 ]

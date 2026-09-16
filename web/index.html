@@ -3,38 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>《奥伯拉丁的回归》身份与下落提示与查验程序</title>
+    <title>《奥伯拉丁的回归》身份与下落提示与查验网站</title>
     <link rel="icon" href="icon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=8">
+    <script>
+    // 语言包要等 fetch 完才能用，加载页文案先按 localStorage 里的语言定下来，避免中英闪烁
+    (function () {
+        var lang = 'sc';
+        try { lang = localStorage.getItem('app_lang') === 'en' ? 'en' : 'sc'; } catch (e) {}
+        document.documentElement.lang = lang === 'en' ? 'en' : 'zh';
+        document.addEventListener('DOMContentLoaded', function () {
+            var el = document.getElementById('loading-label');
+            if (el) el.textContent = lang === 'en' ? 'Loading' : '加载中';
+        });
+    })();
+    </script>
     <script type="text/javascript" src="/eel.js"></script>
-    <script src="js/main.js" defer></script>
+    <script src="js/backend.js?v=8" defer></script>
+    <script src="js/i18n.js?v=3" defer></script>
+    <script src="js/main.js?v=10" defer></script>
+    <script src="js/custom_cursor.js?v=2" defer></script>
 </head>
 <body>
+    <!-- 加载页：深色底 + 进度条；资源就绪后淡出（控件见 css/#loading-screen 与 main.js Loading 模块） -->
+    <div id="loading-screen">
+        <div id="loading-inner">
+            <div id="loading-label" data-i18n="ui.loading">加载中</div>
+            <div id="loading-track"><div id="loading-fill"></div></div>
+            <div id="loading-percent">0%</div>
+        </div>
+    </div>
     <div id="app">
-        <!-- List View -->
+        <!-- List View (FolioSketch) -->
         <div id="list-view" class="view active">
             <div class="tools-bar">
-                <button id="btn-format" class="nav-btn">格式化</button>
+                <button id="btn-format" class="nav-btn format-btn" aria-label="格式化" data-i18n-attr="aria-label|ui.nav.format"></button>
+                <button id="btn-lang" class="nav-btn lang-btn" aria-label="语言" data-i18n-attr="aria-label|ui.nav.lang"></button>
+                <button id="btn-keybind" class="nav-btn keybind-btn" aria-label="按键绑定" data-i18n-attr="aria-label|ui.nav.keybind"></button>
+                <button id="btn-info" class="nav-btn info-btn" aria-label="关于" data-i18n-attr="aria-label|ui.nav.info"></button>
             </div>
-            <div id="grid-container"></div>
-            <div class="nav-bar">
-                <button id="btn-prev" class="nav-btn">&lt;&lt; 上一页</button>
-                <div id="page-info" class="page-info"></div>
-                <button id="btn-next" class="nav-btn">下一页 &gt;&gt;</button>
+            <div id="sketch-scroll">
+                <canvas id="sketch-canvas"></canvas>
+            </div>
+            <div id="hover-portrait" class="hidden">
+                <div id="hover-portrait-frame">
+                    <div id="portrait-image-wrap">
+                        <div id="portrait-role-band" class="hidden">
+                            <span id="portrait-role-text"></span>
+                        </div>
+                        <img id="hover-portrait-img" alt="">
+                        <div id="portrait-fate-band">
+                            <div id="portrait-name-line" class="hidden"><span id="portrait-name-text"></span></div>
+                            <div id="portrait-fate-line"><span id="portrait-fate-text"></span></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- Detail View -->
         <div id="detail-view" class="view">
             <div class="top-bar">
-                <button id="btn-back" class="nav-btn">&lt;&lt; 返回列表</button>
+                <button id="btn-back" class="back-btn" aria-label="返回列表" data-i18n-attr="aria-label|ui.nav.back"></button>
             </div>
             
             <div class="detail-top-container">
                 <div class="guess-widget-wrapper left">
-                    <button id="btn-check-identity" class="nav-btn check-btn">查验</button>
+                    <button id="btn-check-identity" class="nav-btn check-btn" data-i18n="ui.detail.check">查验</button>
                     <div id="identity-guess-container" class="guess-container">
-                        <span id="lbl-identity-guess" class="guess-label">不详</span>
+                        <span id="lbl-identity-guess" class="guess-label" data-i18n="ui.common.unknown">不详</span>
                     </div>
                 </div>
 
@@ -42,28 +79,28 @@
 
                 <div class="guess-widget-wrapper right">
                     <div id="fate-guess-container" class="guess-container">
-                        <span id="lbl-fate-part1" class="guess-label">未记录下落</span>
+                        <span id="lbl-fate-part1" class="guess-label" data-i18n="ui.common.no_fate">未记录下落</span>
                         <span id="lbl-fate-part2" class="guess-label"></span>
                     </div>
-                    <button id="btn-check-fate" class="nav-btn check-btn">查验</button>
+                    <button id="btn-check-fate" class="nav-btn check-btn" data-i18n="ui.detail.check">查验</button>
                 </div>
             </div>
 
             <div class="info-container">
                 <div class="info-column">
-                    <h2 class="column-title">身份</h2>
+                    <h2 class="column-title" data-i18n="ui.detail.identity_title">身份</h2>
                     <div id="identity-text" class="hint-text"></div>
-                    <button id="btn-reveal-identity" class="nav-btn reveal-btn">获取新提示</button>
-                    <div id="lbl-identity-done" class="done-label hidden">已显示所有提示</div>
+                    <button id="btn-reveal-identity" class="nav-btn reveal-btn" data-i18n="ui.detail.reveal_hint">获取新提示</button>
+                    <div id="lbl-identity-done" class="done-label hidden" data-i18n="ui.detail.all_hints_shown">已显示所有提示</div>
                 </div>
                 
                 <div class="separator"></div>
                 
                 <div class="info-column">
-                    <h2 class="column-title">下落</h2>
+                    <h2 class="column-title" data-i18n="ui.detail.fate_title">下落</h2>
                     <div id="fate-text" class="hint-text"></div>
-                    <button id="btn-reveal-fate" class="nav-btn reveal-btn">获取新提示</button>
-                    <div id="lbl-fate-done" class="done-label hidden">已显示所有提示</div>
+                    <button id="btn-reveal-fate" class="nav-btn reveal-btn" data-i18n="ui.detail.reveal_hint">获取新提示</button>
+                    <div id="lbl-fate-done" class="done-label hidden" data-i18n="ui.detail.all_hints_shown">已显示所有提示</div>
                 </div>
             </div>
         </div>
@@ -71,42 +108,93 @@
         <!-- Modals/Overlays -->
         <!-- Crew Selector -->
         <div id="crew-selector" class="overlay hidden">
-            <h2 id="crew-selector-title" class="overlay-title">选择船员</h2>
-            <div class="crew-layout">
-                <div id="crew-sidebar" class="sidebar hidden">
-                    <div class="sidebar-title">特殊</div>
-                    <div class="sidebar-item" data-id="-1">敌人</div>
-                    <div class="sidebar-item" data-id="-2">野兽</div>
-                </div>
-                <div class="crew-content">
-                    <div class="crew-header">
-                        <div class="col-id">编号</div>
-                        <div class="col-name">姓名</div>
-                        <div class="col-role">身份</div>
-                        <div class="col-origin">籍贯</div>
+            <div id="crew-selector-mask"></div>
+            <button id="btn-crew-cancel" class="back-btn" aria-label="取消" data-i18n-attr="aria-label|ui.common.cancel"></button>
+            <div id="crew-selector-window">
+                <div class="crew-layout">
+                    <div class="crew-content">
+                        <div id="crew-list-container"></div>
                     </div>
-                    <div id="crew-list-container"></div>
                 </div>
-            </div>
-            <div class="overlay-nav">
-                <button id="btn-crew-prev" class="nav-btn">&lt;&lt;</button>
-                <div id="crew-page-info" class="page-info"></div>
-                <button id="btn-crew-next" class="nav-btn">&gt;&gt;</button>
-                <button id="btn-crew-cancel" class="nav-btn cancel-btn">取消</button>
+                <div class="overlay-nav">
+                    <div id="crew-page-info" class="page-info"></div>
+                </div>
+                <!-- 翻页角标（左右页脚）：左=上一页，右=下一页；盖住窗口双框角 -->
+                <button id="btn-crew-page-prev" class="page-turn page-turn-prev" data-i18n-attr="aria-label|ui.crew_selector.prev" aria-label="上一页"></button>
+                <button id="btn-crew-page-next" class="page-turn page-turn-next" data-i18n-attr="aria-label|ui.crew_selector.next" aria-label="下一页"></button>
             </div>
         </div>
 
         <!-- Fate Selector -->
         <div id="fate-selector" class="overlay hidden">
-            <h2 id="fate-selector-title" class="overlay-title">选择死因</h2>
-            <div id="fate-content-container" class="fate-content"></div>
-            <div class="overlay-nav" id="fate-nav">
-                <button id="btn-fate-prev" class="nav-btn">&lt;&lt;</button>
-                <div id="fate-page-info" class="page-info"></div>
-                <button id="btn-fate-next" class="nav-btn">&gt;&gt;</button>
-                <button id="btn-fate-cancel" class="nav-btn cancel-btn">取消</button>
+            <div id="fate-selector-mask"></div>
+            <button id="btn-fate-cancel" class="back-btn" aria-label="取消" data-i18n-attr="aria-label|ui.common.cancel"></button>
+            <div id="fate-selector-window">
+                <h2 id="fate-selector-title" class="overlay-title" data-i18n="ui.fate_selector.title">选择死因</h2>
+                <div id="fate-content-container" class="fate-content"></div>
+                <div class="overlay-nav" id="fate-nav">
+                    <div id="fate-page-info" class="page-info"></div>
+                </div>
+                <button id="btn-fate-page-prev" class="page-turn page-turn-prev" data-i18n-attr="aria-label|ui.crew_selector.prev" aria-label="上一页"></button>
+                <button id="btn-fate-page-next" class="page-turn page-turn-next" data-i18n-attr="aria-label|ui.crew_selector.next" aria-label="下一页"></button>
+            </div>
+        </div>
+
+        <!-- Keybind Selector -->
+        <div id="keybind-selector" class="overlay hidden">
+            <div id="keybind-selector-mask"></div>
+            <button id="btn-keybind-cancel" class="back-btn" aria-label="取消" data-i18n-attr="aria-label|ui.common.cancel"></button>
+            <div id="keybind-selector-window">
+                <h2 id="keybind-selector-title" class="overlay-title" data-i18n="ui.keybind.title">按键绑定</h2>
+                <p id="keybind-warning" class="keybind-warning" data-i18n="ui.keybind.warning">使用非默认的按键绑定可能会导致问题。</p>
+                <div id="keybind-status" class="keybind-status"></div>
+                <div id="keybind-list" class="keybind-list"></div>
+            </div>
+        </div>
+
+        <!-- Info Selector -->
+        <div id="info-selector" class="overlay hidden">
+            <div id="info-selector-mask"></div>
+            <button id="btn-info-cancel" class="back-btn" aria-label="取消" data-i18n-attr="aria-label|ui.common.cancel"></button>
+            <div id="info-selector-window">
+                <h2 id="info-selector-title" class="overlay-title" data-i18n="ui.info.title">关于</h2>
+                <div id="info-content" class="info-content"></div>
             </div>
         </div>
     </div>
+    <!-- 移动端提示：检测到手机/平板浏览器时显示，建议改用电脑（桌面版是 app 窗口，永远不会出现） -->
+    <div id="mobile-notice" class="overlay hidden">
+        <div id="mobile-notice-mask"></div>
+        <div id="mobile-notice-window">
+            <div id="mobile-notice-title" data-i18n="ui.mobile.title">建议使用电脑浏览器</div>
+            <div id="mobile-notice-text" data-i18n="ui.mobile.text">本程序为桌面端设计，在手机上操作会非常不便。</div>
+            <button id="btn-mobile-continue" class="nav-btn" data-i18n="ui.mobile.continue">仍要继续</button>
+        </div>
+    </div>
+    <!-- 格式化确认窗口（50% 透明白遮罩 + 黑底窗口） -->
+    <div id="format-confirm" class="hidden">
+        <div id="format-confirm-mask"></div>
+        <div id="format-confirm-window">
+            <div id="format-confirm-title" data-i18n="ui.format_confirm.title">格式化</div>
+            <div id="format-confirm-text" data-i18n="ui.format_confirm.text">此操作将清除所有的本地数据。</div>
+            <div class="format-confirm-btns">
+                <button id="btn-format-yes" class="format-confirm-btn" data-i18n="ui.common.yes">是</button>
+                <button id="btn-format-no" class="format-confirm-btn" data-i18n="ui.common.no">否</button>
+            </div>
+        </div>
+    </div>
+    <!-- 自定义光标（JS 驱动，跟随鼠标；绕过底部区域 CSS 光标 bug） -->
+    <div id="custom-cursor">
+        <img id="cc-magnifier" src="/CursorMagnifierStyled.png" alt="">
+        <img id="cc-arrow" src="/CursorArrowStyled48.png" alt="" class="hidden">
+        <img id="cc-x" src="/CursorXStyled32.png" alt="" class="hidden">
+        <img id="cc-circle" src="/CursorCircleStyled32.png" alt="" class="hidden">
+    </div>
+    <!-- 键盘控制运动框可视化（红色框，调试用） -->
+    <div id="kb-box-overlay" class="hidden"></div>
+    <!-- 测试光标（Cyan 圆形，跟随系统光标真实位置，调试用） -->
+    <div id="test-cursor"></div>
+    <!-- 真正光标（深蓝圆，临时替代游戏放大镜/箭头，调试用） -->
+    <div id="real-cursor-dot"></div>
 </body>
 </html>
