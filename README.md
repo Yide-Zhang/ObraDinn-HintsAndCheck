@@ -34,7 +34,7 @@ If you are downloading too slow in mainland, China, please consider the network 
 
 双击可执行文件即可使用。双击之后会有一段时间（约 5 s）用来释放资源，请耐心等候。
 
-在最新版中，您可以像游戏本体一样进行操作。所有的数据都在本地存储，不会因为简单关闭软件而丢失（见下一节）。
+在最新版中，您可以像游戏本体一样进行操作。所有的数据都在本地存储，不会因为简单关闭软件而丢失。
 
 点击所要了解的人的照片，点击页面下方的“获取新提示”即可逐步获取提示。最后一步提示会直接锁定答案。
 
@@ -44,7 +44,7 @@ If you are downloading too slow in mainland, China, please consider the network 
 
 Double click on the executable file to open it. There will be a delay (around 5 seconds) for releasing the resources. Please wait with patience.
 
-In the latest version, you can operate same as you do in the game. All data are saved locally so it wouldn't be lost by simply terminating the programme (see the next section).
+In the latest version, you can operate same as you do in the game. All data are saved locally so it wouldn't be lost by simply terminating the programme.
 
 Click on the photo of the people you want to know. Click on the "Get new hints" buttons below to get step-by-step hints. The last step will lock the answer automatically.
 
