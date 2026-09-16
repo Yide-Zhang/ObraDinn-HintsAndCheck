@@ -7,14 +7,18 @@
 1. 逐步、不剧透的提示玩家推理线索；
 2. 让玩家按照游戏的判定方式查验自己的答案是否正确。
 
-本工具暂不考虑多语言化。如果您有需要，请提交 issue。本工具的简体中文本地化文本以[此翻译精修补丁最新版](https://github.com/Yide-Zhang/obradinn_chinese_pack)为准。
+本工具已有英文本地化。本工具的简体中文本地化文本以[此翻译精修补丁最新版](https://github.com/Yide-Zhang/obradinn_chinese_pack)为准。
+
+本程序有对应的网页版。点击[这里](https://yide-zhang.github.io/ObraDinn-HaC)以跳转。
 
 This is a Hints & Check tool for *Return of the Obra Dinn* made by a player. It
 
 1. can give deduction glues to the players step by step without spoilers, and
 2. allows players to check their answers same as the game's validation system.
 
-This tool will not be multi-lingual temporarily. If you want it, please submit an issue. The localized Simplified Chinese text for this tool is based on [the latest version of this relocalization patch](https://github.com/Yide-Zhang/obradinn_chinese_pack).
+This programme supports Englishg now. The localized Simplified Chinese text for this tool is based on [the latest version of this relocalization patch](https://github.com/Yide-Zhang/obradinn_chinese_pack).
+
+This programme has a corresponding website. Click [here](https://yide-zhang.github.io/ObraDinn-HaC) to jump to this website.
 
 ## 下载 (Downloading)
 
@@ -30,31 +34,27 @@ If you are downloading too slow in mainland, China, please consider the network 
 
 双击可执行文件即可使用。双击之后会有一段时间（约 5 s）用来释放资源，请耐心等候。
 
-在最新版中，您可以使用鼠标滚轮来翻页。所有的数据都在本地存储，不会因为简单关闭软件而丢失（见下一节）。
+在最新版中，您可以像游戏本体一样进行操作。所有的数据都在本地存储，不会因为简单关闭软件而丢失（见下一节）。
 
 点击所要了解的人的照片，点击页面下方的“获取新提示”即可逐步获取提示。最后一步提示会直接锁定答案。
 
 点击人物详情页中人物照片两侧的输入框，即可像游戏中一样填写推测。点击“查验”，即可检查自己的推测是否正确。
 
-可以点击主页右上角的“格式化”按钮以清除所有数据。
+主页右上角的四个按钮分别为格式化（清除所有数据）、切换语言、按键绑定和关于此程序的信息。
 
 Double click on the executable file to open it. There will be a delay (around 5 seconds) for releasing the resources. Please wait with patience.
 
-In the latest version, you can flip the page by just scrolling the mouse wheel. All data are saved locally so it wouldn't be lost by simply terminating the programme (see the next section).
+In the latest version, you can operate same as you do in the game. All data are saved locally so it wouldn't be lost by simply terminating the programme (see the next section).
 
 Click on the photo of the people you want to know. Click on the "Get new hints" buttons below to get step-by-step hints. The last step will lock the answer automatically.
 
 Click on the input boxes beside the photo in the detail page for characters to fill in your answers like what you do in the game. Click on the "Check" button to validate your answers.
 
-Click on the "Formating" button on the top right to clean up all data.
+The four buttons on the top right in the main page are respectively: Formating, Switching Language, Key Binding and Information about this programme.
 
 ## 使用时注意 (Cautions)
 
-Windows 系统的玩家请务必不要删除同目录下的 `hints_used.json`。这是你存放数据的地方。
-
 本程序使用 Web 技术搭建，因此会使用您的浏览器。但本程序是本地离线程序，所以请不要害怕。本程序不会获取您的任何个人信息。
-
-Windows users must not delete the `hints_used.json` in the same directory. It's where the data lay.
 
 This programme is built with web, so it will use your browser. This programme is a local, offline programme, so please do not be scared. The programme will not acquire any of your privacy.
 
