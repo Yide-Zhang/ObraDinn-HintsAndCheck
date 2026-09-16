@@ -66,6 +66,6 @@ If there's a problem, please submit an issue.
 
 ## AI 生成内容 (AI generated content)
 
-本项目的程序部分使用 Gemini-Pro-3.1 生成。
+本项目使用 Deepseek 辅助制作。
 
-The programme for this project is generated with Gemini-Pro-3.1.
+The programme is made assisted by Deepseek.
