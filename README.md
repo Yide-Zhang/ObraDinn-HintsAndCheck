@@ -16,7 +16,7 @@ This is a Hints & Check tool for *Return of the Obra Dinn* made by a player. It
 1. can give deduction glues to the players step by step without spoilers, and
 2. allows players to check their answers same as the game's validation system.
 
-This programme supports Englishg now. The localized Simplified Chinese text for this tool is based on [the latest version of this relocalization patch](https://github.com/Yide-Zhang/obradinn_chinese_pack).
+This programme supports English now. The localized Simplified Chinese text for this tool is based on [the latest version of this relocalization patch](https://github.com/Yide-Zhang/obradinn_chinese_pack).
 
 This programme has a corresponding website. Click [here](https://yide-zhang.github.io/ObraDinn-HaC) to jump to this website.
 
