@@ -40,7 +40,7 @@ If you are downloading too slow in mainland, China, please consider the network 
 
 点击人物详情页中人物照片两侧的输入框，即可像游戏中一样填写推测。点击“查验”，即可检查自己的推测是否正确。
 
-主页右上角的四个按钮分别为格式化（清除所有数据）、切换语言、按键绑定和关于此程序的信息。
+主页右上角的五个按钮分别为格式化（清除所有数据）、切换语言、译名与用词（选择船员名字的译名变体，以及是否和谐敏感地名；仅在中文界面显示）、按键绑定和关于此程序的信息。
 
 Double click on the executable file to open it. There will be a delay (around 5 seconds) for releasing the resources. Please wait with patience.
 
@@ -50,7 +50,7 @@ Click on the photo of the people you want to know. Click on the "Get new hints" 
 
 Click on the input boxes beside the photo in the detail page for characters to fill in your answers like what you do in the game. Click on the "Check" button to validate your answers.
 
-The four buttons on the top right in the main page are respectively: Formating, Switching Language, Key Binding and Information about this programme.
+The five buttons on the top right in the main page are respectively: Formating, Switching Language, Translation & Wording (choose the translation variant of the crews' names, and whether to harmonize sensitive place names; shown only in the Chinese interface), Key Binding and Information about this programme.
 
 ## 使用时注意 (Cautions)
 
