@@ -18,6 +18,7 @@ a = Analysis(
         ('fates_structure.json', '.'),
         ('correct_fates_list.json', '.'),
         ('faces_annotations.json', '.'),
+        ('crew_name_variants.json', '.'),
         ('FolioSketch_obra.png', '.'),
         ('FolioSketch.png', '.'),
         ('FacesHi', 'FacesHi'),

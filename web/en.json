@@ -26,7 +26,19 @@
       "back": "Return to the Sketch",
       "lang": "Language",
       "keybind": "KEY BINDINGS",
-      "info": "ABOUT"
+      "info": "ABOUT",
+      "translation": "TRANSLATION"
+    },
+    "translation": {
+      "title": "TRANSLATION & WORDING",
+      "names_title": "Crew name translation",
+      "lang_zh": "Chinese",
+      "lang_en": "English",
+      "version_old": "Old",
+      "version_new": "New",
+      "form_full": "Full names",
+      "form_short": "Short names",
+      "places_title": "Harmonize sensitive place names"
     },
     "info": {
       "title": "ABOUT",
@@ -403,7 +415,8 @@
     "face_13_fate_2": "This soul was clubbed by Henry Brennan.",
     "face_14_identity_0": "This soul was being pulled by another person when he died, and this was mentioned verbally later. Do you remember that?",
     "face_14_identity_1": "Review the scene and dialogue of “Chapter IX  THE ESCAPE  Part 6”, and pay attention to where this scene takes place.\n The next hint will show the answer.",
-    "face_14_identity_2": "This soul was being pulled back, and the midshipman who pulled him said, “Tell Pete's mother... I tried my best”, so this soul must be a midshipman, therefore he must be\n 33    Peter Milroy    Midshipman    England",
+    "face_14_identity_2": "“Pete” seems to be a nickname.\n The next hint will show the answer.",
+    "face_14_identity_3": "This soul was being pulled back, and the midshipman who pulled him said, “Tell Pete's mother... I tried my best”, so this soul must be a midshipman, therefore he must be\n 33    Peter Milroy    Midshipman    England",
     "face_14_fate_0": "Inspect this soul's death scene carefully.\n The next hint will show the answer.",
     "face_14_fate_1": "This soul was exploded.",
     "face_15_identity_0": "Where did this young man die? Take a look at the name of that location.",

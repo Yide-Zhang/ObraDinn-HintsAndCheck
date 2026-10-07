@@ -330,6 +330,32 @@ body {
     background-image: url('../info-click-styled.png');
 }
 
+/* 译名与用词入口：translation 系列 icon（normal/hover/click 风格化）；尺寸与格式化按钮一致；
+   仅中文界面显示（i18n.js 会把 <html lang> 设为 zh / en） */
+.translation-btn {
+    width: 7vw;
+    height: 7vw;
+    min-width: 56px;
+    min-height: 56px;
+    padding: 0;
+    border: none;                        /* 无外框，仅图标本身 */
+    background-color: transparent;
+    background-image: url('../translation_normal_styled.png');
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 50%;                  /* 圆形外观 */
+}
+.translation-btn:hover {
+    background-image: url('../translation_hover_styled.png');
+}
+.translation-btn:active {
+    background-image: url('../translation_click_styled.png');
+}
+html[lang="en"] .translation-btn {
+    display: none;
+}
+
 /* 返回按钮：back 系列圆形 icon（悬浮左上角；尺寸与格式化按钮一致；三态） */
 .back-btn {
     position: absolute;              /* 悬浮，不占文档流 */
@@ -891,6 +917,87 @@ body {
     border-color: var(--bg-color);
 }
 
+/* 译名与用词窗口：全屏遮罩 + 居中双框窗口，分组标题 + 选项行 */
+#translation-selector {
+    background: transparent;
+    justify-content: center;
+    align-items: center;
+}
+#translation-selector-mask {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.5);   /* 50% 透明白遮罩 */
+}
+#translation-selector-window {
+    position: relative;
+    z-index: 1;
+    width: fit-content;
+    min-width: calc(920px * var(--scale));
+    max-width: 96vw;
+    background: var(--bg-color);            /* 黑底 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    padding: calc(20px * var(--scale)) calc(52px * var(--scale)) calc(30px * var(--scale));
+    /* 双框：白窄框贴窗口 + 黑宽框在外 */
+    box-shadow:
+        0 0 0 0.15vw var(--fg-color),
+        0 0 0 calc(0.15vw + 1.1vw) var(--bg-color),
+        0 8px 30px rgba(0, 0, 0, 0.6);
+}
+#translation-selector .overlay-title {
+    font-size: calc(56px * var(--scale));
+    font-weight: normal;                       /* h2 默认粗体 → 常规字重 */
+    padding: calc(8px * var(--scale)) calc(20px * var(--scale)) calc(6px * var(--scale));
+}
+.translation-content {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+}
+/* 分组标题（船员名字译名 / 和谐敏感地名）：大字号、居中 */
+.translation-section {
+    font-family: var(--font-en), var(--font-main);
+    font-size: calc(36px * var(--scale));
+    color: var(--fg-color);
+    text-align: center;
+    padding: calc(22px * var(--scale)) 0 calc(12px * var(--scale));
+}
+/* 中文专属子分组：两个子子部分（版本 / 名字形式）左右并排、无标题，占满整宽 */
+.translation-subgroup {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: calc(56px * var(--scale));   /* 留够间距，让两列内侧的选中箭头不相撞 */
+    width: 100%;
+}
+.translation-subgroup .translation-list {
+    flex: 1 1 0;
+    width: auto;
+}
+.translation-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+/* 子分组内的选项行（旧版/新版、无缩写名/缩写名）：字号略小 */
+.translation-item.sub {
+    font-size: calc(26px * var(--scale));
+}
+/* 选项行：透明边框 → hover/选中转白框；选中行两侧 pointer 箭头（规则与 crew-row/fate-item 共用） */
+.translation-item {
+    position: relative;
+    border: 1px solid transparent;
+    padding: calc(12px * var(--scale)) calc(31px * var(--scale));   /* 左右延长放箭头（同 crew-row） */
+    margin: calc(4px * var(--scale)) 0;      /* 行间距同步 crew-row */
+    font-size: calc(30px * var(--scale));    /* 大字号（同 crew-row） */
+    line-height: 0.8;
+    text-align: center;
+    cursor: pointer;
+}
+
 /* 选择器内导航按钮（上一页/下一页/取消）悬停与禁用态也强制箭头光标 */
 #crew-selector .nav-btn,
 #crew-selector .nav-btn:hover,
@@ -1127,11 +1234,11 @@ body {
     font-size: calc(30px * var(--scale));    /* 大字号（同 crew-row） */
     line-height: 0.8;                        /* 行高极小 */
 }
-.sidebar-item:hover, .fate-item:hover, .crew-row:hover {
+.sidebar-item:hover, .fate-item:hover, .crew-row:hover, .translation-item:hover {
     border-color: var(--fg-color);
 }
 /* 键盘选择高亮（模拟 hover，WS 导航选中项；AD 翻页后仍可见） */
-.crew-row.kb-hover, .fate-item.kb-hover {
+.crew-row.kb-hover, .fate-item.kb-hover, .translation-item.kb-hover {
     border-color: var(--fg-color);
 }
 /* 详情页键盘导航高亮（模拟 hover，WASD 选中项；鼠标动起来转交鼠标）
@@ -1164,13 +1271,13 @@ body {
     background: var(--fg-color);
     color: var(--bg-color);
 }
-.sidebar-item:active, .fate-item:active, .crew-row:active {
+.sidebar-item:active, .fate-item:active, .crew-row:active, .translation-item:active {
     background-color: var(--fg-color);
     color: var(--bg-color);
     border-color: transparent;
 }
 
-.sidebar-item.selected, .fate-item.selected, .crew-row.selected {
+.sidebar-item.selected, .fate-item.selected, .crew-row.selected, .translation-item.selected {
     position: relative;
     border-color: var(--fg-color);
 }
@@ -1194,7 +1301,9 @@ body {
 .crew-row.selected::before,
 .crew-row.selected::after,
 .fate-item.selected::before,
-.fate-item.selected::after {
+.fate-item.selected::after,
+.translation-item.selected::before,
+.translation-item.selected::after {
     content: '';
     position: absolute;
     top: 50%;
@@ -1207,13 +1316,15 @@ body {
 }
 /* 左箭头（指向中间=向右）：原图，中心线落在左边框并向内偏移 6.74% 箭头宽（GUI offset 6px/89px） */
 .crew-row.selected::before,
-.fate-item.selected::before {
+.fate-item.selected::before,
+.translation-item.selected::before {
     left: 0;
     transform: translate(calc(-50% + 6.74%), -50%);
 }
 /* 右箭头（指向中间=向左）：镜像，中心线落在右边框并向内偏移 6.74% 箭头宽 */
 .crew-row.selected::after,
-.fate-item.selected::after {
+.fate-item.selected::after,
+.translation-item.selected::after {
     right: 0;
     transform: translate(calc(50% - 6.74%), -50%) scaleX(-1);
 }
@@ -1221,7 +1332,9 @@ body {
 .crew-row.selected:active::before,
 .crew-row.selected:active::after,
 .fate-item.selected:active::before,
-.fate-item.selected:active::after {
+.fate-item.selected:active::after,
+.translation-item.selected:active::before,
+.translation-item.selected:active::after {
     background-image: url('../pointer-click-styled.png');
 }
 

@@ -4,11 +4,11 @@
 const Backend = (() => {
     // ---- 数据加载 ----
     // 返回 { faces_data, crew_list, correct_map, fates_structure, correct_fates, annotations, id_to_face, sketch_b64 }
-    // onProgress：网页版按 7 个请求逐项回调；桌面版本地一次读完后补齐 7 个计数，让两边进度条节奏一致
+    // onProgress：网页版按 8 个请求逐项回调；桌面版本地一次读完后补齐 8 个计数，让两边进度条节奏一致
     // sketch_b64 为 "data:image/png;base64,..."（网页版则是图片 URL），main.js 直接赋给 img.src，两版通用
     async function getInitData(onProgress) {
         const data = await eel.get_init_data()();
-        if (onProgress) for (let i = 0; i < 7; i++) onProgress();
+        if (onProgress) for (let i = 0; i < 8; i++) onProgress();
         return data;
     }
 

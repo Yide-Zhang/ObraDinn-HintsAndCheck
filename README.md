@@ -7,7 +7,7 @@
 1. 逐步、不剧透的提示玩家推理线索；
 2. 让玩家按照游戏的判定方式查验自己的答案是否正确。
 
-本工具已有英文本地化。本工具的简体中文本地化文本以[此翻译精修补丁最新版](https://github.com/Yide-Zhang/obradinn_chinese_pack)为准。
+本工具已有英文本地化。本工具的简体中文本地化文本以[此翻译精修补丁最新版](https://github.com/Yide-Zhang/ObraDinn-CN_Refined)为准。
 
 本程序有对应的网页版。点击[这里](https://yide-zhang.github.io/ObraDinn-HaC)以跳转。
 
@@ -16,7 +16,7 @@ This is a Hints & Check tool for *Return of the Obra Dinn* made by a player. It
 1. can give deduction glues to the players step by step without spoilers, and
 2. allows players to check their answers same as the game's validation system.
 
-This programme supports English now. The localized Simplified Chinese text for this tool is based on [the latest version of this relocalization patch](https://github.com/Yide-Zhang/obradinn_chinese_pack).
+This programme supports English now. The localized Simplified Chinese text for this tool is based on [the latest version of this relocalization patch](https://github.com/Yide-Zhang/ObraDinn-CN_Refined).
 
 This programme has a corresponding website. Click [here](https://yide-zhang.github.io/ObraDinn-HaC) to jump to this website.
 

@@ -67,6 +67,7 @@ correct_fates = {}
 annotations = []
 id_to_face = {}
 sketch_b64 = ""
+name_variants = {}
 
 def load_file_b64(filename):
     path = resource_path(filename)
@@ -80,7 +81,7 @@ def load_file_b64(filename):
 
 def load_data():
     global faces_data, crew_list, correct_map, fates_structure, correct_fates
-    global annotations, id_to_face, sketch_b64
+    global annotations, id_to_face, sketch_b64, name_variants
 
     def load_json(filename, default):
         path = resource_path(filename)
@@ -97,6 +98,9 @@ def load_data():
     correct_map = load_json("correct_name_list.json", {})
     fates_structure = load_json("fates_structure.json", [])
     correct_fates = load_json("correct_fates_list.json", {})
+
+    # 译名与用词：标志表（[CrewNameXxx] / [China] / [Formosa] → 各档位文本）
+    name_variants = load_json("crew_name_variants.json", {})
 
     # 素描人脸标注（点击命中用）
     ann_data = load_json("faces_annotations.json", None)
@@ -129,7 +133,8 @@ def get_init_data():
         "correct_fates": correct_fates,
         "annotations": annotations,
         "id_to_face": id_to_face,
-        "sketch_b64": sketch_b64
+        "sketch_b64": sketch_b64,
+        "name_variants": name_variants
     }
 
 @eel.expose

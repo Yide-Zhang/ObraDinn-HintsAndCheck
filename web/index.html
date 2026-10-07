@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>《奥伯拉丁的回归》身份与下落提示与查验网站</title>
     <link rel="icon" href="icon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="css/style.css?v=8">
+    <link rel="stylesheet" href="css/style.css?v=10">
     <script>
     // 语言包要等 fetch 完才能用，加载页文案先按 localStorage 里的语言定下来，避免中英闪烁
     (function () {
@@ -19,9 +19,9 @@
     })();
     </script>
     <script type="text/javascript" src="/eel.js"></script>
-    <script src="js/backend.js?v=8" defer></script>
-    <script src="js/i18n.js?v=3" defer></script>
-    <script src="js/main.js?v=10" defer></script>
+    <script src="js/backend.js?v=9" defer></script>
+    <script src="js/i18n.js?v=5" defer></script>
+    <script src="js/main.js?v=14" defer></script>
     <script src="js/custom_cursor.js?v=2" defer></script>
 </head>
 <body>
@@ -39,6 +39,7 @@
             <div class="tools-bar">
                 <button id="btn-format" class="nav-btn format-btn" aria-label="格式化" data-i18n-attr="aria-label|ui.nav.format"></button>
                 <button id="btn-lang" class="nav-btn lang-btn" aria-label="语言" data-i18n-attr="aria-label|ui.nav.lang"></button>
+                <button id="btn-translation" class="nav-btn translation-btn" aria-label="译名与用词" data-i18n-attr="aria-label|ui.nav.translation"></button>
                 <button id="btn-keybind" class="nav-btn keybind-btn" aria-label="按键绑定" data-i18n-attr="aria-label|ui.nav.keybind"></button>
                 <button id="btn-info" class="nav-btn info-btn" aria-label="关于" data-i18n-attr="aria-label|ui.nav.info"></button>
             </div>
@@ -159,6 +160,25 @@
             <div id="info-selector-window">
                 <h2 id="info-selector-title" class="overlay-title" data-i18n="ui.info.title">关于</h2>
                 <div id="info-content" class="info-content"></div>
+            </div>
+        </div>
+
+        <!-- Translation Selector（仅中文界面显示：船员名字译名 + 和谐敏感地名） -->
+        <div id="translation-selector" class="overlay hidden">
+            <div id="translation-selector-mask"></div>
+            <button id="btn-translation-cancel" class="back-btn" aria-label="取消" data-i18n-attr="aria-label|ui.common.cancel"></button>
+            <div id="translation-selector-window">
+                <h2 id="translation-selector-title" class="overlay-title" data-i18n="ui.translation.title">译名与用词</h2>
+                <div id="translation-content" class="translation-content">
+                    <div class="translation-section" data-i18n="ui.translation.names_title">船员名字译名</div>
+                    <div id="translation-name-lang-list" class="translation-list"></div>
+                    <div id="translation-name-zh" class="translation-subgroup">
+                        <div id="translation-name-version-list" class="translation-list"></div>
+                        <div id="translation-name-form-list" class="translation-list"></div>
+                    </div>
+                    <div class="translation-section" data-i18n="ui.translation.places_title">和谐敏感地名</div>
+                    <div id="translation-place-list" class="translation-list"></div>
+                </div>
             </div>
         </div>
     </div>

@@ -155,7 +155,7 @@ function setupMobileNotice() {
 
 // Initialize App
 async function init() {
-    Loading.add(8);          // 语言包 1 + 数据 7（getInitData 的 7 个请求）
+    Loading.add(9);          // 语言包 1 + 数据 8（getInitData 的 8 个请求）
     await I18N.load();
     Loading.tick();
     I18N.applyStatic();
@@ -167,6 +167,11 @@ async function init() {
     correct_fates = data.correct_fates;
     annotations = (data.annotations || []).filter(a => a && a.mask);
     idToFace = data.id_to_face || {};
+
+    // 译名与用词：取变体表 + 读设置，并在任何名字渲染之前把标志展开起来
+    nameVariantTables = data.name_variants || null;
+    loadTranslationSettings();
+    applyTranslationSettings();
 
     // 预热任务总数（网页版＝字体＋60 张脸图；桌面版＝0）：必须在下一个 await 之前登记，
     // 否则数据阶段的最后一次 tick 会让进度条提前判定完成
@@ -354,6 +359,17 @@ function bindEvents() {
         closeInfoSelector();
     });
 
+    // 译名与用词入口（仅中文界面显示；音效与尺寸同其他入口按钮）
+    document.getElementById('btn-translation').addEventListener('mouseenter', () => playSound('SelChange.wav'));
+    document.getElementById('btn-translation').addEventListener('click', () => {
+        playFateOpenSound();
+        openTranslationSelector();
+    });
+    document.getElementById('btn-translation-cancel').addEventListener('click', () => {
+        playFateCloseSound();
+        closeTranslationSelector();
+    });
+
     // 所有圆形返回/取消按钮（.back-btn：详情页返回、各选择器取消）hover 统一播 SelChange
     document.querySelectorAll('.back-btn').forEach((btn) => {
         btn.addEventListener('mouseenter', () => playSound('SelChange.wav'));
@@ -366,10 +382,15 @@ function bindEvents() {
     document.getElementById('detail-view').addEventListener('mousemove', detDeactivate);
     // 格式化弹窗：鼠标动起来 → 键盘高亮转交鼠标
     document.getElementById('format-confirm').addEventListener('mousemove', fmtSelDeactivate);
+    // 译名与用词窗口：鼠标动起来 → 键盘高亮转交鼠标
+    document.getElementById('translation-selector').addEventListener('mousemove', transSelDeactivate);
 }
 
 // 无刷新语言切换：按当前视图状态重渲染动态内容（图片不重载 → 不黑屏）
 function refreshI18nUI() {
+    // 译名与用词：语言切换后重新注入标志表（切到英文则清空展开）
+    applyTranslationSettings();
+
     // 语言按钮图标：显示目标语言图标
     const langBtn = document.getElementById('btn-lang');
     if (langBtn) {
@@ -395,6 +416,10 @@ function refreshI18nUI() {
         if (fate_weapon_mode && fate_weapon_obj) renderWeaponPage(fate_weapon_obj);
         else renderFatePage();
     }
+
+    // 译名与用词窗口：仅中文界面可用（切到英文时关闭），选项文案随语言刷新
+    if (I18N.getLang() === 'en') closeTranslationSelector();
+    else renderTranslationOptions();
 
     // 草图 hover 肖像：若正显示则刷新文字（名字/身份/下落语言）
     const p = document.getElementById('hover-portrait');
@@ -735,7 +760,7 @@ async function openDetails(filename) {
     let id_hints = faceData.identity_hints || (faceData.identity ? [faceData.identity] : [I18N.t('ui.common.no_identity') || '未记录身份']);
     let fate_hints = faceData.fate_hints || (faceData.fate ? [faceData.fate] : [I18N.t('ui.common.no_fate') || '未记录下落']);
 
-    if (state.identity >= id_hints.length && state.status !== "verified") {
+    if (nextHintSlot(filename, 'identity', state.identity, id_hints.length) < 0 && state.status !== "verified") {
         if (correct_map[filename]) {
             state.guessed_id = correct_map[filename];
             state.status = "verified";
@@ -889,16 +914,48 @@ function renderGuessWidgets(filename) {
     fateContainer.classList.toggle('verified', state.fate_status === 'verified');   // 同上：已验证则不做点击反色
 }
 
+// ---- 提示槽位在部分译名档位下不可用（语言包顶层 hint_skip 声明）----
+// 一个 face 的提示槽位由 faces_data.json 固定（槽位下标是存档的坐标），语言包只声明
+// 「哪些槽位在当前译名档位下不成立」。因此 revealed_state 里的计数仍然是「槽位游标」：
+//   · 切档位不改写存档、只换一层过滤 → 来回切换单调，无需数据迁移；
+//   · 切档位时消失的只可能是「新档位下不成立」的那几条，永远不会误伤仍然有效的提示。
+function hintSkipSet(filename, type) {
+    const tbl = I18N.getHintSkip();
+    const set = new Set();
+    if (!tbl) return set;
+    const prefix = filename.replace('.png', '') + '_' + type + '_';
+    const variant = translationNameVariant();
+    for (const key of Object.keys(tbl)) {
+        if (key.indexOf(prefix) !== 0) continue;
+        const idx = parseInt(key.slice(prefix.length), 10);
+        const vs = tbl[key];
+        if (Number.isInteger(idx) && Array.isArray(vs) && vs.indexOf(variant) >= 0) set.add(idx);
+    }
+    return set;
+}
+
+// 从 from 起第一个可用槽位；-1 = 当前档位下已无更多提示
+function nextHintSlot(filename, type, from, total) {
+    const skip = hintSkipSet(filename, type);
+    for (let i = Math.max(0, from); i < total; i++) {
+        if (!skip.has(i)) return i;
+    }
+    return -1;
+}
+
 function renderHints(filename, type, hints) {
     const state = revealed_state[filename];
     const count = state[type];
+    const skip = hintSkipSet(filename, type);
     
     let displayHtml = "";
+    let shown = 0;
     const base = filename.replace('.png', '');
     for (let i = 0; i < count; i++) {
-        if (i < hints.length) {
-            if (i > 0) displayHtml += "<br><br>";
+        if (i < hints.length && !skip.has(i)) {
+            if (shown > 0) displayHtml += "<br><br>";
             displayHtml += renderMixedText(I18N.t(`hints.${base}_${type}_${i}`) || hints[i]);
+            shown++;
         }
     }
     
@@ -907,7 +964,7 @@ function renderHints(filename, type, hints) {
     const btnReveal = document.getElementById(`btn-reveal-${type}`);
     const lblDone = document.getElementById(`lbl-${type}-done`);
     
-    if (count >= hints.length) {
+    if (nextHintSlot(filename, type, count, hints.length) < 0) {
         btnReveal.classList.add('hidden');
         lblDone.classList.remove('hidden');
     } else {
@@ -917,12 +974,17 @@ function renderHints(filename, type, hints) {
 }
 
 async function revealHint(filename, type) {
-    revealed_state[filename][type]++;
     const faceData = faces_data[filename] || {};
     let hints = faceData[`${type}_hints`] || (faceData[type] ? [faceData[type]] : [type === 'identity' ? (I18N.t('ui.common.no_identity') || '未记录身份') : (I18N.t('ui.common.no_fate') || '未记录下落')]);
+    const state = revealed_state[filename];
+    
+    // 游标推进到下一个可用槽位：当前档位下被声明为不可用的槽位自动跳过，
+    // 保证一次点击至少多显示一条提示（否则会出现「点了没反应」的空点击）
+    const slot = nextHintSlot(filename, type, state[type], hints.length);
+    state[type] = slot < 0 ? hints.length : slot + 1;
     
     // Auto lock checks
-    if (type === 'identity' && revealed_state[filename][type] >= hints.length && revealed_state[filename].status !== "verified") {
+    if (type === 'identity' && nextHintSlot(filename, type, state[type], hints.length) < 0 && state.status !== "verified") {
         if (correct_map[filename]) {
             revealed_state[filename].guessed_id = correct_map[filename];
             revealed_state[filename].status = "verified";
@@ -930,7 +992,7 @@ async function revealHint(filename, type) {
             openDetails(filename);
             return;
         }
-    } else if (type === 'fate' && revealed_state[filename][type] >= hints.length && revealed_state[filename].fate_status !== "verified") {
+    } else if (type === 'fate' && nextHintSlot(filename, type, state[type], hints.length) < 0 && state.fate_status !== "verified") {
         let correct_data = correct_fates[filename];
         if (correct_data) {
             if (Array.isArray(correct_data)) correct_data = correct_data[0];
@@ -1881,7 +1943,7 @@ function renderInfoList() {
     p4.className = 'info-para';
     const link = document.createElement('a');
     link.className = 'info-link';
-    link.href = 'https://github.com/Yide-Zhang/obradinn_chinese_pack';
+    link.href = 'https://github.com/Yide-Zhang/ObraDinn-CN_Refined';
     link.target = '_blank'; link.rel = 'noopener';
     link.textContent = I18N.t('ui.info.p4_link');
     link.addEventListener('mouseenter', () => playSound('SelChange.wav'));
@@ -1910,6 +1972,149 @@ function openInfoSelector() {
 }
 function closeInfoSelector() {
     document.getElementById('info-selector').classList.add('hidden');
+    cursorRefresh();
+}
+
+// ===== 译名与用词窗口（仅中文界面）=====
+// 层级：船员名字译名 → 中文 / 英文；选「中文」后展开「版本」（旧版/新版）与「名字形式」（无缩写名/缩写名）。
+// 组合对应 new_data/crew_name_variants.tsv 的版本：
+//   中文·旧版·无缩写 = 1，中文·旧版·缩写 = 2，英文 = 3，中文·新版·无缩写 = 4，中文·新版·缩写 = 5
+// 落地方式：把该档位的标志表交给 I18N（applyTranslationSettings），语言包里的
+// [CrewNameXxx] / [China] / [Formosa] 在 I18N.t() 取值时展开；英文界面不注入（清空展开）。
+const TRANSLATION_LANG_KEYS = ['ui.translation.lang_zh', 'ui.translation.lang_en'];
+const TRANSLATION_VERSION_KEYS = ['ui.translation.version_old', 'ui.translation.version_new'];
+const TRANSLATION_FORM_KEYS = ['ui.translation.form_full', 'ui.translation.form_short'];
+const TRANSLATION_PLACE_KEYS = ['ui.common.yes', 'ui.common.no'];
+const TRANSLATION_STATE_KEY = 'obra_translation_v1';
+
+let nameVariantTables = null;    // crew_name_variants.json（由后端随数据一起给出）
+let transNameLang = 0;           // 0 = 中文，1 = 英文
+let transNameVersion = 0;        // 0 = 旧版，1 = 新版
+let transNameShort = 0;          // 0 = 无缩写名，1 = 缩写名
+let translationPlaceIdx = 1;     // 和谐敏感地名（0 = 是，1 = 否）
+let transSelActive = false;      // 键盘导航是否接管高亮
+let transSelRow = 0;             // 键盘高亮行（按 DOM 顺序编号，跳过隐藏行）
+
+// 当前选择对应的译名版本号（1~5，对应 TSV 的版本列）
+function translationNameVariant() {
+    if (transNameLang === 1) return 3;                                    // 英文原名
+    return (transNameVersion === 1 ? 4 : 1) + (transNameShort === 1 ? 1 : 0);
+}
+
+function transRows() {
+    return Array.from(document.querySelectorAll('#translation-selector .translation-item'))
+        .filter(row => !row.closest('.hidden'));                          // 隐藏的中文子分组不参与键盘导航
+}
+
+// ---- 设置落盘（localStorage；与按键绑定同一套做法）----
+function loadTranslationSettings() {
+    try {
+        const s = JSON.parse(localStorage.getItem(TRANSLATION_STATE_KEY));
+        if (!s || typeof s !== 'object') return;
+        if (s.lang === 0 || s.lang === 1) transNameLang = s.lang;
+        if (s.version === 0 || s.version === 1) transNameVersion = s.version;
+        if (s.short === 0 || s.short === 1) transNameShort = s.short;
+        if (s.place === 0 || s.place === 1) translationPlaceIdx = s.place;
+    } catch (e) {}
+}
+
+function saveTranslationSettings() {
+    try {
+        localStorage.setItem(TRANSLATION_STATE_KEY, JSON.stringify({
+            lang: transNameLang, version: transNameVersion, short: transNameShort, place: translationPlaceIdx,
+        }));
+    } catch (e) {}
+}
+
+// ---- 落到文本：把当前档位的标志表 + 地域词注入 I18N ----
+// 地域词 region = { 标志: [未和谐, 和谐] }；和谐开关「是」取第 2 项
+function applyTranslationSettings() {
+    const tbl = nameVariantTables || {};
+    const variants = tbl.variants || {};
+    const region = tbl.region || {};
+    let map = null;
+    const base = variants[String(translationNameVariant())];
+    if (I18N.getLang() !== 'en' && base) {                                // 英文界面不展开
+        map = Object.assign({}, base);
+        for (const tok of Object.keys(region)) {
+            const pair = region[tok] || [];
+            map[tok] = pair[translationPlaceIdx === 0 ? 1 : 0] || tok;
+        }
+    }
+    I18N.setTokenMap(map);
+}
+
+function transApplyHover() {
+    transRows().forEach((row, i) => row.classList.toggle('kb-hover', transSelActive && i === transSelRow));
+}
+
+// 选项行随语言/选择刷新重建（点击后重建，需要重新套用键盘高亮）
+// sub = true 的行属于中文子分组，字号略小
+function renderTranslationOptions() {
+    const fill = (container, keys, selectedIdx, sub, pick) => {
+        if (!container) return;
+        container.innerHTML = '';
+        keys.forEach((key, i) => {
+            const row = document.createElement('div');
+            row.className = 'translation-item' + (sub ? ' sub' : '') + (i === selectedIdx ? ' selected' : '');
+            row.innerHTML = renderMixedText(I18N.t(key) || '');
+            row.addEventListener('mouseenter', () => playSound('SelChange.wav'));
+            row.addEventListener('click', () => {
+                transSelRow = transRows().indexOf(row);   // 键盘导航从鼠标点中的这一行继续
+                playSound('PopupOpen.wav');
+                pick(i);
+                saveTranslationSettings();
+                applyTranslationSettings();
+                refreshI18nUI();                          // 重渲染已暴露的界面（含本窗口选项）
+            });
+            container.appendChild(row);
+        });
+    };
+    fill(document.getElementById('translation-name-lang-list'), TRANSLATION_LANG_KEYS, transNameLang, false,
+        (i) => { transNameLang = i; });
+    fill(document.getElementById('translation-name-version-list'), TRANSLATION_VERSION_KEYS, transNameVersion, true,
+        (i) => { transNameVersion = i; });
+    fill(document.getElementById('translation-name-form-list'), TRANSLATION_FORM_KEYS, transNameShort, true,
+        (i) => { transNameShort = i; });
+    fill(document.getElementById('translation-place-list'), TRANSLATION_PLACE_KEYS, translationPlaceIdx, false,
+        (i) => { translationPlaceIdx = i; });
+
+    // 中文专属子分组：选「英文」时隐藏（键盘导航也随之跳过）
+    const zhGroup = document.getElementById('translation-name-zh');
+    if (zhGroup) zhGroup.classList.toggle('hidden', transNameLang !== 0);
+    transApplyHover();
+}
+
+function transSelDeactivate() {
+    transSelActive = false;
+    transApplyHover();
+}
+
+function transMove(delta) {
+    const rows = transRows();
+    if (!rows.length) return;
+    transSelActive = true;
+    transSelRow = (transSelRow + delta + rows.length) % rows.length;
+    transApplyHover();
+    playSound('SelChange.wav');
+}
+
+function transClick() {
+    const rows = transRows();
+    if (transSelActive && rows[transSelRow]) rows[transSelRow].click();   // 与鼠标点击一致
+}
+
+function openTranslationSelector() {
+    document.getElementById('translation-selector').classList.remove('hidden');
+    transSelActive = false;
+    transSelRow = transNameLang;      // 键盘接管时从「中文 / 英文」行起步
+    renderTranslationOptions();
+    cursorRefresh();
+}
+
+function closeTranslationSelector() {
+    transSelDeactivate();
+    document.getElementById('translation-selector').classList.add('hidden');
     cursorRefresh();
 }
 
@@ -2051,6 +2256,7 @@ function kbActive() {
     if (!document.getElementById('keybind-selector').classList.contains('hidden')) return false;
     if (!document.getElementById('info-selector').classList.contains('hidden')) return false;
     if (!document.getElementById('format-confirm').classList.contains('hidden')) return false;
+    if (!document.getElementById('translation-selector').classList.contains('hidden')) return false;
     return true;
 }
 
@@ -2213,6 +2419,12 @@ document.addEventListener('keydown', (e) => {
         document.getElementById('btn-info-cancel').click();
         return;
     }
+    // 2.7) 译名与用词窗口 → 关闭
+    if (!document.getElementById('translation-selector').classList.contains('hidden')) {
+        e.preventDefault();
+        document.getElementById('btn-translation-cancel').click();
+        return;
+    }
     // 3) 详情页 → 返回列表视图
     if (document.getElementById('detail-view').classList.contains('active')) {
         e.preventDefault();
@@ -2223,6 +2435,17 @@ document.addEventListener('keydown', (e) => {
 });
 // 主页面快捷键：F 调出格式化窗口（弹窗内 SW 切换 / Space 确定 / ESC 退出）；L 语言切换
 document.addEventListener('keydown', (e) => {
+    // 译名与用词窗口打开：WS 在选项间移动，Space 选中当前项（ESC 由上方处理）
+    if (!document.getElementById('translation-selector').classList.contains('hidden')) {
+        if (e.code === 'KeyS' || e.code === 'KeyW') {
+            e.preventDefault();
+            transMove(e.code === 'KeyS' ? 1 : -1);
+        } else if (e.code === 'Space') {
+            e.preventDefault();
+            transClick();
+        }
+        return;   // 弹窗内其他键不响应
+    }
     // 格式弹窗打开：SW 在“是/否”间切换，Space 确定当前项（ESC 由上方处理）
     if (!document.getElementById('format-confirm').classList.contains('hidden')) {
         if (e.code === 'KeyS' || e.code === 'KeyW') {
@@ -2239,6 +2462,7 @@ document.addEventListener('keydown', (e) => {
         || !document.getElementById('fate-selector').classList.contains('hidden')
         || !document.getElementById('keybind-selector').classList.contains('hidden')
         || !document.getElementById('info-selector').classList.contains('hidden')
+        || !document.getElementById('translation-selector').classList.contains('hidden')
         || document.getElementById('detail-view').classList.contains('active');
     if (!document.getElementById('list-view').classList.contains('active') || busy) return;
     if (e.code === EXTRA_BINDS.format) { e.preventDefault(); openFormatConfirm(); return; }
