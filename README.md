@@ -50,7 +50,7 @@ Click on the photo of the people you want to know. Click on the "Get new hints" 
 
 Click on the input boxes beside the photo in the detail page for characters to fill in your answers like what you do in the game. Click on the "Check" button to validate your answers.
 
-The five buttons on the top right in the main page are respectively: Formating, Switching Language, Translation & Wording (choose the translation variant of the crews' names, and whether to harmonize sensitive place names; shown only in the Chinese interface), Key Binding and Information about this programme.
+The four buttons on the top right in the main page are respectively: Formating, Switching Language, Key Binding and Information about this programme.
 
 ## 使用时注意 (Cautions)
 
