@@ -16,8 +16,9 @@
 }
 @font-face {
     font-family: '851TegakiZatsu';
-    /* 子集版：同上，80.32MB -> 9.45MB（原 851tegakizatsu.otf 保留作备份） */
-    src: url('../fonts/851tegakizatsu-subset.otf') format('opentype');
+    /* 子集版：同上，31.48MB -> 3.59MB（原 851tegakizatsu.otf 保留作备份）
+       ?v=2：字体内容更新过但文件名未变，用查询串强制浏览器/CDN 重新下载 */
+    src: url('../fonts/851tegakizatsu-subset.otf?v=2') format('opentype');
 }
 
 @font-face {
